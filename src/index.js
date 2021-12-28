@@ -24,7 +24,15 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+
+  const userTodoQtd = user.todos.length
+
+  if(userTodoQtd < 10 && user.pro === false) {
+    return next();
+  }
+
+  return response.status(403).json({error: "Not space enough! Buy more space for yours todos now and don't lose time"})
 }
 
 function checksTodoExists(request, response, next) {
