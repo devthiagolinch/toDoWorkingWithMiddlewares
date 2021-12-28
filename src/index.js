@@ -28,11 +28,11 @@ function checksCreateTodosUserAvailability(request, response, next) {
 
   const userTodoQtd = user.todos.length
 
-  if(userTodoQtd < 10 && user.pro === false) {
-    return next();
+  if(userTodoQtd == 10 && user.pro === false) {
+    return response.status(403).json({message: "Not space enough! Buy more space for yours todos now and don't lose time"})
   }
 
-  return response.status(403).json({error: "Not space enough! Buy more space for yours todos now and don't lose time"})
+  return next();
 }
 
 function checksTodoExists(request, response, next) {
@@ -56,7 +56,7 @@ app.post('/users', (request, response) => {
     id: uuidv4(),
     name,
     username,
-    pro: false,
+    pro: true,
     todos: []
   };
 
