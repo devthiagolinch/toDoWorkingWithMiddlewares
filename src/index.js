@@ -36,7 +36,11 @@ function checksCreateTodosUserAvailability(request, response, next) {
 }
 
 function checksTodoExists(request, response, next) {
-  // Complete aqui
+  const {username} = request.headers;
+  const {id} = request.params;
+
+  const userExists = users.find(user => user.username === username);
+  const idUuidType = id.type === validate;
 }
 
 function findUserById(request, response, next) {
