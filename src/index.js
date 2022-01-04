@@ -40,6 +40,11 @@ function checksTodoExists(request, response, next) {
   const {id} = request.params;
 
   const userExists = users.some((userE) => userE.username === username)
+  const idValidade = validate(id, 4)
+
+  if (!idValidade){
+    return response.status(400).json({error: "Not a UUID type"})
+  }
 
   if(!userExists){
     return response.status(404).json({error: "User not Found!"});
@@ -50,11 +55,6 @@ function checksTodoExists(request, response, next) {
 
   if(!todo){
     return response.status(404).json({error: "ToDo not Found!"});
-  }
-
-
-  if (!id.typeof === validate){
-    return response.status(400).send()
   }
   
   request.user = user
