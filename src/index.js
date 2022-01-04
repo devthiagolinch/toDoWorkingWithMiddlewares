@@ -64,7 +64,17 @@ function checksTodoExists(request, response, next) {
 }
 
 function findUserById(request, response, next) {
-  // Complete aqui
+  const {id} = request.params;
+
+  const user = users.find(user => user.id === id)
+
+  if(!user) {
+    return response.status(404).json({error: "User id not found!"});
+  }
+
+  request.user = user;
+
+  return next()
 }
 
 app.post('/users', (request, response) => {
@@ -80,7 +90,7 @@ app.post('/users', (request, response) => {
     id: uuidv4(),
     name,
     username,
-    pro: true,
+    pro: false,
     todos: []
   };
 
@@ -90,7 +100,7 @@ app.post('/users', (request, response) => {
 });
 
 app.get('/users/:id', findUserById, (request, response) => {
-  const { user } = request;
+  const { user } = request; 
 
   return response.json(user);
 });
